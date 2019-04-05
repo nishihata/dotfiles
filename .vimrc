@@ -5,6 +5,11 @@ colorscheme one
 :syntax on
 :set hlsearch
 :set noswapfile
+:set tabstop=4
+:set autoindent
+:set expandtab
+:set shiftwidth=4
+
 
 " == タブ、空白の可視化 ======================================
 set list
@@ -24,70 +29,58 @@ if has('syntax')
   call ZenkakuSpace()
 endif
 
-" == Start NeoBundle Scripts ======================================
-if &compatible
-  set nocompatible               " Be iMproved
-endif
+" == Start plug.vim ======================================
+""""""""""""""""""""""""""""""
+call plug#begin('~/.vim/plugged')
 
-" Required:
-set runtimepath^=/Users/300606/.vim/bundle/neobundle.vim/
+  " ファイル検索
+  Plug 'Shougo/unite.vim'
+  Plug 'Shougo/neomru.vim'
+  let g:unite_source_history_yank_enable =1
+  let g:unite_source_file_mru_limit = 200
+  noremap <C-U><C-F> :Unite -buffer-name=file file<CR> " ファイル一覧
+  noremap <C-U><C-R> :Unite file_mru<CR> " 最近使ったファイル一覧
+  au FileType unite nnoremap <silent> <buffer> <expr> <C-i>
+  au FileType unite inoremap <silent> <buffer> <expr> <C-i>
+  au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
+  au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 
-" Required:
-call neobundle#begin(expand('/Users/300606/.vim/bundle'))
+  " ツリー表示
+  Plug 'scrooloose/nerdtree'
+  let NERDTreeShowHidden = 1
+  nmap <Leader><Tab> <C-w>w
+  nnoremap <silent><C-t> :NERDTreeToggle<CR>
 
-" Let NeoBundle manage NeoBundle
-" Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
+  " タグジャンプ
+  Plug 'soramugi/auto-ctags.vim'
+  nnoremap <C-]> g<C-]>_
+  let g:auto_ctags = 0
+  let g:auto_ctags_directory_list = ['.git', '.svn']
+  let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
+  let g:auto_ctags_filetype_mode = 1
+  set tags+=.git/tags
 
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'slim-template/vim-slim'
+  " 構文チェッカー
+  Plug 'scrooloose/syntastic'
+  let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['ruby', 'typescript', 'css', 'dockerfile'] }
+  let g:syntastic_javascript_checkers=['eslint']
+  let g:syntastic_ruby_checkers = ['rubocop']
 
-" == NERDTree ===============================================
-NeoBundle 'scrooloose/nerdtree'
-nnoremap <silent><C-t> :NERDTreeToggle<CR>
+  " vimでgit操作
+  Plug 'tpope/vim-fugitive'
+  autocmd QuickFixCmdPost *grep* cwindow
+  set statusline+=%{fugitive#statusline()}
 
-" == Unite ==================================================
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/neomru.vim'
-let g:unite_source_history_yank_enable =1
-let g:unite_source_file_mru_limit = 200
-noremap <C-U><C-F> :Unite -buffer-name=file file<CR> " ファイル一覧
-noremap <C-U><C-R> :Unite file_mru<CR> " 最近使ったファイル一覧
-au FileType unite nnoremap <silent> <buffer> <expr> <C-i>
-au FileType unite inoremap <silent> <buffer> <expr> <C-i>
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
+  " vim 下部line 表示
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
 
-" == Syntastic ==============================================
-NeoBundle 'scrooloose/syntastic'
-let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['ruby'] }
-let g:syntastic_ruby_checkers = ['rubocop']
+  " Ruby向けにend自動挿入
+  Plug 'tpope/vim-endwise'
 
-" == VimShell ===============================================
-" usage: `:VimShell`
-NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
-nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
-nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+  " コメントON/OFFを手軽に実行
+  Plug 'tomtom/tcomment_vim'
 
-" == CTags ==================================================
-NeoBundle 'soramugi/auto-ctags.vim'
-" tagsジャンプの時に複数ある時は一覧表示
-nnoremap <C-]> g<C-]>_
-let g:auto_ctags = 1
-let g:auto_ctags_directory_list = ['.git', '.svn']
-let g:auto_ctags_tags_args = '--tag-relative --recurse --sort=yes'
-let g:auto_ctags_filetype_mode = 1
-set tags+=.git/tags
+call plug#end()
+""""""""""""""""""""""""""""""
 
-
-call neobundle#end()
-" == End NeoBundle Scripts ======================================
-
-" Required:
-filetype plugin indent on
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
