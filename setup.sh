@@ -25,5 +25,8 @@ link_file() {
 link_file "$ROOT/.vimrc" "$HOME/.vimrc"
 link_file "$ROOT/colors/one.vim" "$HOME/.vim/colors/one.vim"
 link_file "$ROOT/fish/config.fish" "$HOME/.config/fish/config.fish"
+link_file "$ROOT/nvim/init.vim" "$HOME/.config/nvim/init.vim"
+link_file "$ROOT/colors/one.vim" "$HOME/.config/nvim/colors/one.vim"
+link_file "$ROOT/ghostty/config" "$HOME/.config/ghostty/config"
 
-printf '\nDone. Restart fish or open Vim to load the settings.\n'
+printf '\nDone. Restart fish or open Vim, Neovim, or Ghostty to load the settings.\n'

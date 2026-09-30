@@ -1,0 +1,45 @@
+# テーマ
+theme = Dark+
+#theme = tokyonight
+
+# --- ウィンドウ・透明度 ---
+# 背景を透過させてブラー（すりガラス効果）を入れる
+background-opacity = 0.75
+background-blur-radius = 20
+
+# --- Macネイティブな挙動 ---
+# タイトルバーを透明にしてスッキリさせる
+macos-titlebar-style = transparent
+# フルスクリーン時にMac標準の挙動にする
+macos-window-shadow = true
+# 入力中はマウスカーソルを隠す
+mouse-hide-while-typing = true
+
+# 選択しただけでクリップボードにコピー
+copy-on-select = clipboard
+# クリップボードの読み書きを許可
+clipboard-read = allow
+clipboard-write = allow
+
+desktop-notifications = true
+
+# フォント
+font-size = 12.5
+
+font-family = JetBrains Mono NL
+#font-family = "Hiragino Sans"
+#font-family = "Menlo Bold"
+#font-family = "Osaka"
+##font-family = "JetBrains Mono"
+##font-family = "BIZ UDGothic Bold"
+##font-thicken = true
+#
+font-feature = -dlig
+font-feature = -liga
+font-feature = -calt
+bold-color = bright
+
+
+# 選択範囲の色
+selection-background = 33467c
+selection-foreground = c0caf5
