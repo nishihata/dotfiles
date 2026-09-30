@@ -36,7 +36,8 @@ endif
 
 " == Start plug.vim ======================================
 """"""""""""""""""""""""""""""
-call plug#begin('~/.vim/plugged')
+if filereadable(expand('~/.vim/autoload/plug.vim'))
+  call plug#begin('~/.vim/plugged')
 
   " ファイル検索
   Plug 'Shougo/unite.vim'
@@ -105,6 +106,6 @@ call plug#begin('~/.vim/plugged')
   " コメントON/OFFを手軽に実行
   Plug 'tomtom/tcomment_vim'
 
-call plug#end()
+  call plug#end()
+endif
 """"""""""""""""""""""""""""""
-

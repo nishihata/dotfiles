@@ -1,0 +1,5 @@
+brew "fish"
+brew "vim"
+brew "the_silver_searcher"
+brew "rbenv"
+brew "universal-ctags"

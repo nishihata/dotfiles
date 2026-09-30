@@ -1,17 +1,21 @@
-# rbenv
-#eval "$(rbenv init -)";
-# set -x PATH $HOME/.rbenv/bin $PATH
-set -x PATH $HOME/.rbenv/shims $PATH
-rbenv rehash >/dev/null ^&1
-eval (rbenv init - | source)
+# rbenv is optional; keep fish startup usable on machines without it.
+if command -q rbenv
+    rbenv init - fish | source
+end
 
-set -x LSCOLORS gxfxcxdxbxegedabagacad
+# Homebrew is optional and has different prefixes on Apple Silicon and Intel.
+if test -x /opt/homebrew/bin/brew
+    eval (/opt/homebrew/bin/brew shellenv)
+else if test -x /usr/local/bin/brew
+    eval (/usr/local/bin/brew shellenv)
+end
 
-# viでもvimで開く
-alias vi='/usr/bin/vim'
+# Prefer Vim when installed; don't hard-code Apple's system Vim path.
+if command -q vim
+    alias vi vim
+end
 
-# alias
-alias lsa='ls -al'
+alias lsa 'ls -al'
 
 function bind_bang
     switch (commandline -t)[-1]
@@ -35,4 +39,9 @@ end
 function fish_user_key_bindings
     bind ! bind_bang
     bind '$' bind_dollar
+end
+
+# Machine-specific settings belong here and should not be committed.
+if test -f ~/.config/fish/local.fish
+    source ~/.config/fish/local.fish
 end
